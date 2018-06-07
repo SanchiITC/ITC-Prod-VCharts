@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html ng-app="" ng-controller="myCtrl">
+<style>
+    .tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+    .chart div {
+        font: 10px sans-serif;
+        background-color: steelblue;
+        text-align: right;
+        padding: 3px;
+        margin: 1px;
+        color: white;
+    }
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current tablink class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        -webkit-animation: fadeEffect 1s;
+        animation: fadeEffect 1s;
+    }
+
+    /* Fade in tabs */
+    @-webkit-keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+
+    @keyframes fadeEffect {
+        from {opacity: 0;}
+        to {opacity: 1;}
+    }
+    table, th, td {
+        border: 1px solid black;
+        padding:5px;
+    }
+    table {
+        border-collapse: collapse;
+        margin:10px;
+    }
+
+     table {
+         border-collapse: collapse;
+         border: 2px black solid;
+         font: 12px sans-serif;
+     }
+
+    td {
+        border: 1px black solid;
+        padding: 5px;
+    }
+    .bar {
+        fill: steelblue;
+    }
+</style>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+<div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'Tables')">Table</button>
+    <button class="tablinks" onclick="openCity(event, 'Charts')">Charts</button>
+    <button class="tablinks" onclick="openCity(event, 'Home Page')">Home Page</button>
+</div>
+
+<div id="Tables" class="tabcontent">
+    <h3>Welcome to PMD Quality PPQRS </h3>
+
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+    <script type="text/javascript"charset="utf-8">
+        d3.text("new.csv", function(data) {
+            var parsedCSV = d3.csv.parseRows(data);
+
+            var container = d3.select("body")
+                .append("table")
+
+                .selectAll("tr")
+                .data(parsedCSV).enter()
+                .append("tr")
+
+                .selectAll("td")
+                .data(function(d) { return d; }).enter()
+                .append("td")
+                .text(function(d) { return d; });
+        });
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+
+</div>
+
+<div id="Charts" class="tabcontent">
+
+    <h3>Welcome to PMD  </h3>
+    <p>Click on Button to see charts.</p>
+    Operation 86
+    <div class="chart"></div>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+    var data = [100.0,100.0,100.0,100.0,100.0, 80.3,100.0,100.0,100.0,97.8];
+
+    var x = d3.scale.linear()
+        .domain([0, d3.max(data)])
+        .range([0, 420]);
+
+    d3.select(".chart")
+        .selectAll("div")
+        .data(data)
+        .enter().append("div")
+        .style("width", function(d) { return x(d) + "px"; })
+        .text(function(d) { return d; });
+
+</script>
+<div id="PMD Rejection" class="tabcontent">
+
+    <h3>Welcome to PMD  </h3>
+    <p>Click on Home to go on home page.</p>
+    <a href="'index1.html'">Home Page</a>
+</div>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+</script>
+</body>
+</html>
